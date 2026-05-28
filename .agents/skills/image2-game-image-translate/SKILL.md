@@ -1,37 +1,37 @@
 ---
 name: image2-game-image-translate
-description: Mandatory workflow for translating game images, UI textures, CG text, buttons, map labels, and image-based text using image2 only when image translation is needed.
+description: 需要翻译游戏图片、UI 贴图、CG 文字、按钮、地图标签等图像文本时，只使用 image2 的强制流程。
 ---
 
-# Game Image Translation
+# 游戏图片翻译
 
-Use this skill when a localization task requires translating image-based text.
+当本地化任务需要翻译图片内文字时使用。
 
-## Scope
+## 范围
 
-This applies to:
+适用于：
 
-- UI images
-- menu images
-- button images
-- CG text
-- map labels
-- tutorial screenshots
-- textures with visible text
-- any player-visible text baked into an image
+- UI 图片
+- 菜单图片
+- 按钮图片
+- CG 文字
+- 地图标签
+- 教程截图
+- 带可见文字的贴图
+- 任何烘焙进图片里的玩家可见文字
 
-## Rule
+## 规则
 
-Use `image2` for game image translation.
+游戏图片翻译使用 `image2`。
 
-Do not use OCR-to-manual-redraw, alternate image translation tools, Photoshop automation, or hand-recreated textures unless the user explicitly overrides this rule in the current task.
+除非用户在当前任务中明确覆盖，不使用 OCR 转手工重绘、其他图片翻译工具、Photoshop 自动化或手工重建贴图。
 
-## Workflow
+## 流程
 
-1. Identify the source image.
-2. Back up the original.
-3. Translate with `image2`.
-4. Save output under the current game's work folder.
-5. Check dimensions, transparency, format, and file name.
-6. Runtime-test that the game reads the translated image correctly.
-7. Only then include it in the patch archive or release folder.
+1. 找到源图片。
+2. 备份原图。
+3. 使用 `image2` 翻译。
+4. 输出保存到当前游戏工作目录。
+5. 检查尺寸、透明通道、格式和文件名。
+6. 实机测试游戏能正确读取翻译后的图片。
+7. 通过后再放进补丁封包或发布目录。

@@ -1,13 +1,13 @@
-# Reinsertor Agent
+# 回填 Agent
 
-Goal: put translated text back into the current-version scripts.
+目标：把译文写回当前版本脚本。
 
-Responsibilities:
+职责：
 
-- start from the current body extraction, not an old patch archive;
-- validate JSON count and map consistency;
-- preserve control tags, labels, command syntax, and encoding;
-- write into `work/patch_src` or `work/patch_full`;
-- produce a reinsertion report.
+- 从当前版本本体的解包结果开始，不直接使用旧补丁封包。
+- 校验 JSON 条数和映射一致性。
+- 保留控制标签、脚本标签、命令语法和目标编码。
+- 写入 `work/patch_src` 或 `work/patch_full`。
+- 生成回填报告。
 
-Never mix old patch files into a new game version except as a reference.
+旧补丁只能用于参考，不得把旧版本文件混入新版本游戏。

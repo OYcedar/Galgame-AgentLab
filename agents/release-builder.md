@@ -1,19 +1,19 @@
-# Release Builder Agent
+# 发布构建 Agent
 
-Goal: create a clean player-facing patch package.
+目标：创建干净的玩家补丁包。
 
-Release folder may include:
+发布目录可以包含：
 
-- modified exe or launcher;
-- modified script/archive patch;
-- required font files;
-- UTF-8 config files;
-- usage notes.
+- 修改后的 exe 或启动器。
+- 修改后的脚本封包或补丁封包。
+- 必需字体文件。
+- UTF-8 配置文件。
+- 使用说明。
 
-Release folder must not include:
+发布目录禁止包含：
 
-- `_work`;
-- save data;
-- debug screenshots;
-- unpacked original CG/audio/video;
-- API keys or local model settings.
+- `_work`
+- 存档
+- 调试截图
+- 解包后的原始 CG、音频、视频
+- API Key 或本地模型配置

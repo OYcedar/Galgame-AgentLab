@@ -1,19 +1,23 @@
-# Release QA
+# 发布 QA 流程
 
-1. Validate JSON and reports.
-2. Repack the patch/archive.
-3. Re-extract the output and inspect changed scripts.
-4. Launch the patched game from the intended directory.
-5. Test:
-   - first launch;
-   - title;
-   - start;
-   - load;
-   - save/load pages;
-   - history/log;
-   - options/config;
-   - fast skip;
-   - extra/gallery/music when present.
-6. Capture screenshots into `work/runtime_screens`.
-7. Build a clean release folder.
-8. Build archive outputs only after QA passes.
+发布前必须完成以下检查：
+
+1. 在干净的当前版本本体上覆盖发布文件。
+2. 首次启动游戏。
+3. 进入标题菜单。
+4. 从 Start 进入正式对白。
+5. 打开 Load、Save、Log、Config、Extra 等常见页面。
+6. 检查选项分支和 Ctrl/Skip。
+7. 确认没有阻塞型弹窗、黑屏、后台运行、闪退或乱码。
+8. 抽查译文、标点、换行和字体显示。
+
+发布目录禁止包含：
+
+- `_work`
+- `save` / `savedata`
+- 解包素材
+- 调试截图
+- 临时 exe / dll
+- 原始 CG、语音、BGM、视频封包，除非它们确实被修改且允许分发
+
+建议把 QA 截图和测试日志保存到对应游戏的工作目录，而不是发布目录。

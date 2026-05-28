@@ -1,11 +1,11 @@
-# Runtime Tester Agent
+# 实机测试 Agent
 
-Goal: test the real patched game.
+目标：测试真实补丁游戏。
 
-Responsibilities:
+职责：
 
-- launch from the intended target directory;
-- record exe path, working directory, version, and patch timestamps;
-- capture screenshots into `work/runtime_screens`;
-- test first launch, title, start, load, save/load UI, log/history, options, extra menus, fast skip, and representative choices;
-- report crashes, hangs, mojibake, missing glyphs, bad wrapping, and overflow.
+- 从目标游戏目录启动，不误开其他同名游戏。
+- 记录 exe 路径、工作目录、版本和补丁文件时间戳。
+- 把截图保存到 `work/runtime_screens`。
+- 测试首次启动、标题、Start、Load、存读档界面、日志/历史、选项、Extra 菜单、快速跳过和代表性分支。
+- 报告闪退、卡死、乱码、缺字、换行错误和溢出。

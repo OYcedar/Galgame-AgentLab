@@ -1,72 +1,73 @@
 ---
 name: game-engine-detect
-description: Detect non-RPG Windows game engines for authorized localization before extraction, patching, or testing.
+description: 在授权本地化项目中识别非 RPG Windows 游戏引擎，再决定提取、回填、封包和测试方式。
 ---
 
-# Game Engine Detection
+# 游戏引擎识别
 
-Detect the engine before extraction, translation, reinsertion, or patch packaging.
+在提取、翻译、回填或制作补丁前，必须先识别引擎。
 
-## Checklist
+## 检查清单
 
-1. List top-level files, executables, DLLs, and archive extensions.
-2. Inspect archive signatures and common script extensions.
-3. Check whether the executable embeds resources or loads external archives.
-4. Compare old patches only as references, not as source files.
-5. Write `work/engine_report.md`.
+1. 列出顶层文件、可执行文件、DLL 和封包扩展名。
+2. 检查封包签名和常见脚本扩展名。
+3. 判断 exe 是加载外部封包，还是内嵌资源。
+4. 旧补丁只能作为参考，不作为新版本文件来源。
+5. 生成 `work/engine_report.md`。
 
-## Supported Profiles
+## 支持画像
 
 ### Kirikiri / KAG / XP3
 
-Evidence:
+证据：
 
 - `*.xp3`
 - `*.ks`
 - `*.tjs`
 - `startup.tjs`
-- KAG or TJS runtime errors
+- KAG 或 TJS 运行时报错
 
-Recommended skill: `kirikiri-z-localization`.
+推荐 Skill：`kirikiri-z-localization`。
 
 ### LiLiM / Le.Chocolat AOS
 
-Evidence:
+证据：
 
 - `*.aos`
-- extracted `*.scr`
-- commands such as `^go(...)`, `^gsb(...)`, `var`, `fnt(...)`, `wnd(...)`
-- GARbro or custom tools identify AOS resources
+- 解包后的 `*.scr`
+- `^go(...)`、`^gsb(...)`、`var`、`fnt(...)`、`wnd(...)` 等命令
+- GARbro 或自定义工具识别到 AOS 资源
 
-Recommended skill: `lilim-aos-localization`.
+推荐 Skill：`lilim-aos-localization`。
 
-### HSP / DPM
+### Bruns / EENC / EENZ
 
-Evidence:
+证据：
 
-- `*.dpm`
-- `DPMX` headers
-- `start.ax`
-- `hspcmp.dll`, `hspext.dll`, or HSP runtime signatures
-- `HSPHED` inside an executable
+- 文件头为 `EENC` 或 `EENZ`
+- `ams.cfg`
+- `scene/*.bso`
+- 解密后脚本包含 `(a3:...)` 结构
+- 运行时或文件中出现 `Bruns`
 
-Recommended skill: `hsp-dpm-localization`.
+推荐 Skill：`bruns-eenz-localization`。
 
-## Explicitly Out Of Scope
+## 明确排除
 
-- LiveMaker / LiveNovel.
-- RPG Maker workflows.
-- DRM, license checks, online activation, or anti-tamper bypass.
+- LiveMaker / LiveNovel。
+- RPG Maker 工作流。
+- HSP / DPM 工作流。
+- DRM、授权校验、在线激活或反篡改绕过。
 
-## Engine Report
+## 引擎报告
 
-`work/engine_report.md` should include:
+`work/engine_report.md` 应包含：
 
-- suspected engine
-- confidence
-- evidence files
-- archives that need extraction
-- text format and likely encoding
-- whether an old patch can be used as reference
-- files that must not be mixed from old versions
-- recommended next skill or workflow
+- 疑似引擎。
+- 置信度。
+- 证据文件。
+- 需要解包的封包。
+- 文本格式和可能编码。
+- 旧补丁是否只能作为参考。
+- 不能从旧版本混用的文件。
+- 推荐的下一步 Skill 或 Workflow。

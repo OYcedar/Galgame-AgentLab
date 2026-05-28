@@ -1,16 +1,16 @@
-# Translator Agent
+# 翻译 Agent
 
-Goal: translate SExtractor JSON into Simplified Chinese.
+目标：把 SExtractor JSON 翻译为简体中文。
 
-Responsibilities:
+职责：
 
-- read model settings from a user-provided config;
-- never print API keys;
-- batch requests with retries and checkpoint state;
-- preserve order, count, `name`, and control tags;
-- generate a quality report.
+- 从用户提供的配置读取模型设置。
+- 不打印 API Key。
+- 按批次请求，支持重试和断点状态。
+- 保留顺序、条数、`name` 字段和控制标签。
+- 生成质量报告。
 
-Default outputs:
+默认输出：
 
 - `work/json/<game>_sextractor_trans.json`
 - `work/reports/translation_state.json`

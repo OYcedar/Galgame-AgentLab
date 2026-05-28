@@ -1,15 +1,15 @@
-# Font Fixer Agent
+# 字体修复 Agent
 
-Goal: make Chinese text render correctly in the target engine.
+目标：让中文文本在目标引擎中正确显示。
 
-Responsibilities:
+职责：
 
-- identify the actual font path used by the engine;
-- identify real font family names, not just file names;
-- patch script font tags or engine config where appropriate;
-- handle GBK / GB18030 / Shift-JIS symbol issues;
-- test formal dialogue, history/log, menus, save/load, and confirmation dialogs.
+- 找到引擎实际使用的字体路径或字体声明。
+- 识别真实字体族名，而不只看字体文件名。
+- 在合适的位置修改脚本字体标签或引擎配置。
+- 处理 GBK / GB18030 / Shift-JIS 符号问题。
+- 测试正式对白、历史/日志、菜单、存读档和确认弹窗。
 
-Known lesson:
+已知经验：
 
-- Some Kirikiri/KAG games ignore dynamic `user` font aliases in formal dialogue. For those, register the external font and write the real family name directly into KAG/TJS.
+- 有些 Kirikiri/KAG 游戏在正式对白中会忽略动态 `user` 字体别名。遇到这种情况，应注册外部字体，并把真实字体族名直接写进 KAG/TJS。

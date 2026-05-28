@@ -1,43 +1,39 @@
 # Galgame-AgentLab
 
-Galgame-AgentLab is an agent-oriented workflow project for authorized Windows visual novel localization.
+Galgame-AgentLab 是一套面向授权范围内 Windows Galgame / 视觉小说本地化的 Agent 工作流项目。
 
-It organizes translation patch work as cooperating agents:
+它把汉化补丁制作拆成一组可协作的角色：
 
-- engine detection
-- text extraction
-- SExtractor JSON translation
-- reinsertion
-- font and encoding fixes
-- archive packaging
-- runtime QA
-- release building
+- 引擎识别
+- 文本提取
+- SExtractor JSON 翻译
+- 译文回填
+- 字体与编码修复
+- 封包与补丁整理
+- 实机 QA
+- 发布包制作
 
-The project is designed for non-RPG Galgame / visual novel engines. LiveMaker / LiveNovel is intentionally out of scope.
+本项目只处理非 RPG 的 Galgame / 视觉小说引擎。LiveMaker / LiveNovel、RPG Maker、HSP / DPM 不属于本项目范围。
 
-## Supported Engine Profiles
+## 已支持的引擎
 
-Current profiles:
+当前支持：
 
 - Kirikiri Z / KAG / XP3
 - LiLiM / Le.Chocolat AOS
-- HSP / DPM
 - Bruns / EENC / EENZ
-- generic unknown VN engine detection
+- 未知非 RPG VN 引擎初筛
 
-Explicitly excluded:
+明确排除：
 
 - LiveMaker / LiveNovel
-- RPG Maker workflows
-- DRM, license checks, online activation, anti-tamper bypass
+- RPG Maker 工作流
+- HSP / DPM
+- DRM、授权校验、在线激活、反篡改绕过
 
-## Project Model
+## 项目模型
 
-Agent = a role that does one kind of work.
-
-Skill = engine-specific knowledge and constraints.
-
-Workflow = a sequence of agents plus one or more skills.
+Agent 表示一种职责，Skill 表示某类引擎的专用知识，Workflow 表示端到端流程。
 
 ```text
 agents/
@@ -55,15 +51,14 @@ agents/
   bruns-eenz-localization/
   kirikiri-z-localization/
   lilim-aos-localization/
-  hsp-dpm-localization/
   vn-sextractor-json/
   vn-runtime-test/
   vn-release-packaging/
 ```
 
-## Default Text Format
+## 默认文本格式
 
-External translation handoff uses SExtractor JSON:
+外部翻译交付统一使用 SExtractor JSON：
 
 ```json
 [
@@ -77,35 +72,35 @@ External translation handoff uses SExtractor JSON:
 ]
 ```
 
-Metadata for reinsertion belongs in a separate internal map file.
+回填所需的文件名、偏移、行号、命令上下文等元数据必须保存在单独的内部映射文件中。
 
-## Tooling
+## 工具
 
-Reusable tools live in `tools/`.
+通用工具放在 `tools/`。
 
-The current `tools/att-vn-translator` adapter uses ATT-MZ-style model configuration and batch translation ideas, but reads and writes SExtractor JSON for visual novels.
+`tools/att-vn-translator` 是一个 ATT-MZ 风格的 VN 翻译适配器：复用模型配置、批量翻译、断点续跑和校验思路，但输入输出使用 SExtractor JSON。
 
-Typical translation commands:
+常用翻译命令：
 
 ```powershell
 python tools/att-vn-translator/translate_sextractor.py --source work/json/source_sextractor.json --output work/json/source_sextractor_trans.json --setting setting.toml
 python tools/att-vn-translator/validate_sextractor_translation.py --source work/json/source_sextractor.json --translation work/json/source_sextractor_trans.json
 ```
 
-Typical Kirikiri XP3 packing command:
+Kirikiri XP3 常用封包命令：
 
 ```powershell
 & tools/att-vn-translator/pack_kirikiri_xp3.ps1 -SourceDir work/patch_src -OutputXp3 work/dist/patch_chs.xp3 -GarbroDir tools/GARbro -Scheme "your diary + [English]"
 ```
 
-## Repository Rules
+## 仓库规则
 
-- Work only on games and assets the user owns or is authorized to localize.
-- Do not bypass DRM, activation, license checks, or anti-tamper protections.
-- Do not redistribute original game assets unless the patch workflow explicitly requires a modified archive and distribution is permitted.
-- Do not commit game bodies, save data, extracted CG/audio/video assets, API keys, or generated release archives.
-- Keep per-game temporary files under that game's `work` folder.
+- 只处理用户拥有或获授权本地化的游戏与素材。
+- 不绕过 DRM、激活、授权校验或反篡改保护。
+- 不分发原始版权素材，除非补丁流程确实需要修改后的封包且分发许可允许。
+- 不提交游戏本体、存档、解包 CG/语音/视频、API Key 或生成的发布压缩包。
+- 单个游戏的临时文件必须放在该游戏的 `work` 目录下。
 
-## License
+## 许可证
 
-No license is selected yet. Add one before public distribution if needed.
+当前尚未选择许可证。若要公开分发，请先补充合适的许可证。

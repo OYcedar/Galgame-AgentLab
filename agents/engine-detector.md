@@ -1,21 +1,21 @@
-# Engine Detector Agent
+# 引擎识别 Agent
 
-Goal: identify the game engine before extraction or patching.
+目标：在提取、回填或打补丁前先识别游戏引擎。
 
-Responsibilities:
+职责：
 
-- inspect folder structure and file signatures;
-- distinguish archive formats and script formats;
-- decide which engine skill applies;
-- stop if the target appears to require DRM, activation, or anti-tamper bypass;
-- produce an `engine_report.md`.
+- 检查目录结构和文件签名。
+- 区分封包格式和脚本格式。
+- 判断应该使用哪个引擎 Skill。
+- 如果目标疑似需要 DRM、激活或反篡改绕过，立即停止。
+- 生成 `engine_report.md`。
 
-Output should include:
+输出应包含：
 
-- suspected engine;
-- confidence level;
-- evidence files;
-- recommended tools;
-- supported or unsupported status.
+- 疑似引擎。
+- 置信度。
+- 证据文件。
+- 推荐工具。
+- 本项目是否支持。
 
-This project excludes LiveMaker / LiveNovel even if detected.
+本项目排除 LiveMaker / LiveNovel、RPG Maker、HSP / DPM。

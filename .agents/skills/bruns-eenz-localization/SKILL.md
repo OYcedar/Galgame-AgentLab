@@ -1,30 +1,27 @@
 ---
 name: bruns-eenz-localization
-description: Localize Bruns/BGI-like EENC/EENZ visual novels, including ams.cfg, scene BSO scripts, SExtractor JSON, GB18030 reinsertion, exe UI strings, VOICE warning suppression, and runtime QA.
+description: 本地化 Bruns/BGI-like EENC/EENZ 视觉小说，包括 ams.cfg、scene BSO 脚本、SExtractor JSON、GB18030 回填、exe UI 字符串、VOICE 警告处理和实机 QA。
 ---
 
-# Bruns / EENC / EENZ Localization
+# Bruns / EENC / EENZ 本地化
 
-Use this skill for authorized visual novels that use Bruns-style encrypted resources and Lisp-like `a3:` scripts.
+用于授权范围内、使用 Bruns 风格加密资源和 Lisp-like `a3:` 脚本的视觉小说。
 
-## Engine Evidence
+## 引擎证据
 
-Common evidence:
+常见证据：
 
-- Encrypted files beginning with `EENC` or `EENZ`.
-- `ams.cfg` engine configuration.
-- `scene/*.bso` scenario scripts.
-- Decrypted script text contains Lisp-like forms such as:
-  - `(a3:define-set ...)`
-  - `(a3:call-user-func ...)`
-  - `(a3:send-string ...)`
-- Runtime title or files mention `Bruns`.
+- 文件头为 `EENC` 或 `EENZ` 的加密文件。
+- `ams.cfg` 引擎配置。
+- `scene/*.bso` 剧本脚本。
+- 解密脚本包含 `(a3:define-set ...)`、`(a3:call-user-func ...)`、`(a3:send-string ...)` 等结构。
+- 运行标题或文件中出现 `Bruns`。
 
-This engine family may resemble BGI/Ethornell in workflow shape, but do not assume BGI tools can directly unpack it.
+该引擎家族的流程形态可能类似 BGI/Ethornell，但不要假设 BGI 工具能直接处理。
 
-## Workspace
+## 工作目录
 
-Recommended layout:
+推荐布局：
 
 ```text
 games/<game>/
@@ -41,27 +38,27 @@ games/<game>/
 └─ release/
 ```
 
-Keep all one-off binary copies, decrypted config files, screenshots, and test scripts inside the current game's `work` directory.
+一次性二进制副本、解密配置、截图和测试脚本都应放在当前游戏的 `work` 目录内。
 
-## EEN Files
+## EEN 文件
 
-Observed file behavior:
+已知行为：
 
-- `EENC` and `EENZ` are encrypted wrappers.
-- `EENZ` payloads may also be compressed.
-- `ams.cfg`, `scene/*.bso`, and some `parts/*.png` can be wrapped.
+- `EENC` 和 `EENZ` 是加密包装。
+- `EENZ` 载荷可能还经过压缩。
+- `ams.cfg`、`scene/*.bso` 和部分 `parts/*.png` 可能被包装。
 
-Workflow:
+流程：
 
-1. Back up original encrypted files.
-2. Decrypt `ams.cfg` and all target `scene/*.bso`.
-3. Edit only decrypted working copies.
-4. Re-encrypt changed files back to the same paths and names.
-5. Re-decrypt the final output and confirm expected Chinese text is present.
+1. 备份原始加密文件。
+2. 解密 `ams.cfg` 和目标 `scene/*.bso`。
+3. 只编辑解密后的工作副本。
+4. 把变更文件重新加密回相同路径和文件名。
+5. 重新解密最终产物，确认能看到预期中文。
 
-## Text Extraction
+## 文本提取
 
-External translation handoff must use SExtractor JSON:
+外部翻译交付必须使用 SExtractor JSON：
 
 ```json
 [
@@ -75,103 +72,103 @@ External translation handoff must use SExtractor JSON:
 ]
 ```
 
-Keep file names, script offsets, call contexts, and original byte spans in an internal map file.
+文件名、脚本偏移、调用上下文和原始字节范围保存在内部映射文件中。
 
-Extract player-visible text from scenario scripts and menu/system strings. Do not extract:
+只提取剧本和菜单/系统中的玩家可见文本。不要提取：
 
-- `a3:` commands.
-- Numeric resource IDs.
-- Variable references such as `(a3:idref-word ...)`.
-- File paths and resource names.
-- Debug comments.
+- `a3:` 命令。
+- 数字资源 ID。
+- `(a3:idref-word ...)` 等变量引用。
+- 文件路径和资源名。
+- 调试注释。
 
-## Translation And Encoding
+## 翻译与编码
 
-- Target Simplified Chinese unless the project says otherwise.
-- GB18030 is a safe target encoding for Chinese script reinsertion in this engine; verify per title.
-- JSON, reports, and docs stay UTF-8.
-- Preserve command structure and line endings around replaced strings.
-- Validate that every translated string can encode to the target script encoding.
+- 默认翻译为简体中文。
+- 该引擎回填中文脚本时 GB18030 通常较安全，但仍需按作品验证。
+- JSON、报告和说明保持 UTF-8。
+- 替换字符串时保留命令结构和换行。
+- 每条译文都要确认能编码到目标脚本编码。
 
-## Ruby And Special Text
+## Ruby 与特殊文本
 
-Bruns scripts may contain ruby markers such as:
+Bruns 脚本可能包含 ruby 标记：
 
 ```text
 &RA<base>&RS<ruby>&RT
 ```
 
-For Chinese patches, prefer flattening ruby to the base text unless the engine rendering is explicitly verified for Chinese. This avoids small stray text above the baseline and broken log display.
+中文补丁优先把 ruby 扁平化为正文，除非已经实机确认中文 ruby 渲染安全。这样可以避免基线上的细小残字和日志显示破坏。
 
-After reinsertion, scan the translated JSON and decrypted scripts for leftover `&RA`, `&RS`, and `&RT` unless the project intentionally keeps ruby.
+回填后扫描译文 JSON 和解密脚本中的 `&RA`、`&RS`、`&RT`，除非项目有意保留 ruby。
 
-## Exe Work
+## Exe 工作
 
-Allowed exe changes are display/localization compatibility only:
+允许的 exe 修改仅限显示和本地化兼容：
 
-- Window title strings.
-- System/log labels.
-- Debug warning behavior that blocks gameplay.
+- 窗口标题字符串。
+- 系统/日志标签。
+- 阻塞游玩的调试警告行为。
 
-Do not bypass DRM, activation, online checks, anti-tamper, or license checks.
+不得绕过 DRM、激活、在线校验、反篡改或授权检查。
 
-### VOICE Warning
+### VOICE 警告
 
-Some Bruns builds show a modal debug warning:
+有些 Bruns 构建会显示阻塞型调试警告：
 
 ```text
 [WARN] VOICE制御は未対応です(%d)
 ```
 
-Do not disable `voice` configuration or remove voice playback calls just to hide the warning.
+不要为了隐藏警告而禁用 `voice` 配置或删除语音播放调用。
 
-If runtime confirms this is only a debug warning and voice playback must remain intact, prefer a minimal exe patch that downgrades the log level string from `WARN ` to an equal-length non-modal level such as `TRACE`. Keep the `VOICE...` message and all script voice calls intact.
+如果实机确认这只是调试警告，且语音播放必须保留，优先做最小 exe 补丁，把日志等级字符串从 `WARN ` 降级为等长非阻塞等级，例如 `TRACE`。保留 `VOICE...` 消息和全部脚本语音调用。
 
-Always test:
+必须测试：
 
-- first launch;
-- title menu;
-- entering formal dialogue;
-- at least one voiced line if available.
+- 首次启动。
+- 标题菜单。
+- 进入正式对白。
+- 至少一条可用语音。
 
-## Font Handling
+## 字体处理
 
-Be conservative with fonts.
+字体处理要保守。
 
-- Prefer known working system fonts in `ams.cfg`.
-- Do not ship a launcher that registers fonts unless runtime proves the engine uses that registered font.
-- If a local `.ttf` is requested, first verify the real Windows font family name and confirm a formal dialogue screenshot changes.
-- If font experiments fail or do not improve rendering, revert the launcher, `.ini`, user-font registration, and release files.
+- 优先使用 `ams.cfg` 中已验证可用的系统字体。
+- 不发布未经实机证明有效的字体注册启动器。
+- 如果用户要求本地 `.ttf`，先确认真实 Windows 字体族名，再确认正式对白截图确实变化。
+- 如果字体实验失败或没有改善显示，应还原启动器、`.ini`、用户字体注册和发布文件。
 
-## Runtime QA
+## 实机 QA
 
-Minimum QA:
+最低 QA：
 
-- First launch without modal debug warnings.
-- Title menu and choice menu.
-- Start into formal dialogue.
-- Log/backlog.
-- Save/load page.
-- Ctrl skip or auto mode.
-- Scene replay / CG / gallery pages if present.
-- Voice playback remains functional after any warning suppression.
+- 首次启动没有阻塞型调试警告。
+- 标题菜单和选项菜单。
+- Start 进入正式对白。
+- 日志/回想。
+- 存读档页。
+- Ctrl Skip 或 Auto。
+- 如果存在 Scene Replay / CG / Gallery 页面，也要测试。
+- 警告处理后语音播放仍然有效。
 
-Save screenshots under `games/<game>/work/reports`.
+截图保存到 `games/<game>/work/reports`。
 
-## Release
+## 发布
 
-Release only files players need:
+只发布玩家需要的文件：
 
-- Patched exe if needed.
-- Patched `ams.cfg`.
-- Patched `scene/*.bso`.
-- Required README.
+- 必要时的补丁 exe。
+- 补丁 `ams.cfg`。
+- 补丁 `scene/*.bso`。
+- 必要 README。
 
-Do not include:
+不要包含：
 
-- `_work`.
-- save data.
-- decrypted scripts.
-- debug screenshots.
-- unmodified CG, voice, BGM, or movie archives.
-- failed font launcher files or unverified external fonts.
+- `_work`。
+- 存档。
+- 解密脚本。
+- 调试截图。
+- 未修改的 CG、语音、BGM 或视频封包。
+- 失败的字体启动器或未验证外部字体。

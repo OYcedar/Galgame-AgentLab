@@ -1,16 +1,26 @@
-# Unknown Engine Triage
+# 未知引擎初筛流程
 
-1. Run the Engine Detector Agent.
-2. Create `work/reports/engine_report.md`.
-3. If the engine is unsupported, stop with a clear reason.
-4. If supported, select the matching skill profile.
-5. Extract a small sample before bulk work.
-6. Validate encoding and command syntax.
-7. Export SExtractor JSON and a map file.
-8. Continue to the engine-specific workflow.
+步骤：
 
-Unsupported in this project:
+1. 列出顶层文件、exe、dll、封包扩展名和明显脚本文件。
+2. 检查文件头和常见引擎特征。
+3. 生成 `work/engine_report.md`。
+4. 如果引擎已支持，选择对应 Skill 和 Workflow。
+5. 如果引擎未支持，先做最小提取实验，不直接修改本体。
+
+本项目不支持：
 
 - LiveMaker / LiveNovel
 - RPG Maker
-- DRM/activation/anti-tamper protected workflows
+- HSP / DPM
+- DRM、激活、授权校验或反篡改绕过
+
+报告至少包含：
+
+- 疑似引擎。
+- 置信度。
+- 证据文件。
+- 推荐工具链。
+- 是否需要解包。
+- 可能的文本编码。
+- 旧补丁是否只能作为参考。

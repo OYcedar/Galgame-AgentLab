@@ -1,27 +1,27 @@
 ---
 name: kirikiri-z-localization
-description: Build authorized Kirikiri Z / KAG / XP3 Chinese patches with SExtractor JSON, script reinsertion, font handling, XP3 packaging, and runtime QA.
+description: 制作授权 Kirikiri Z / KAG / XP3 中文补丁，包括 SExtractor JSON、脚本回填、字体处理、XP3 封包和实机 QA。
 ---
 
-# Kirikiri Z / KAG / XP3 Localization
+# Kirikiri Z / KAG / XP3 本地化
 
-Use this skill for authorized Kirikiri Z, Kirikiri 2, KAG, and XP3 visual novel projects.
+用于授权范围内的 Kirikiri Z、Kirikiri 2、KAG 和 XP3 视觉小说项目。
 
-## Engine Evidence
+## 引擎证据
 
-Common evidence:
+常见证据：
 
-- `*.xp3` archives.
-- `.ks` KAG scenario scripts.
-- `.tjs` scripts.
-- `startup.tjs`, `Config.tjs`, `first.ks`, `title.ks`, or similar boot scripts.
-- Error dialogs mentioning KAG tags, TJS, or `script`.
+- `*.xp3` 封包。
+- `.ks` KAG 剧本。
+- `.tjs` 脚本。
+- `startup.tjs`、`Config.tjs`、`first.ks`、`title.ks` 等启动脚本。
+- 报错窗口提到 KAG 标签、TJS 或 `script`。
 
-Do not assume every XP3 project has the same packing priority or patch naming. Inspect the current game first.
+不要假设所有 XP3 项目都有相同封包优先级或补丁命名。必须先检查当前游戏。
 
-## Workspace
+## 工作目录
 
-Recommended layout:
+推荐布局：
 
 ```text
 games/<game>/
@@ -36,7 +36,7 @@ games/<game>/
 └─ release/
 ```
 
-Keep the external translation JSON in SExtractor format:
+外部翻译 JSON 使用 SExtractor 格式：
 
 ```json
 [
@@ -50,83 +50,83 @@ Keep the external translation JSON in SExtractor format:
 ]
 ```
 
-Keep file paths, script positions, encodings, and reinsertion metadata in a separate internal map.
+文件路径、脚本位置、编码和回填元数据保存在单独内部映射里。
 
-## Extraction
+## 提取
 
-1. Extract XP3 archives from the current game version.
-2. Identify scenario `.ks` and relevant `.tjs` files.
-3. Export player-visible text only.
-4. Preserve KAG tags in the message text when they affect display.
-5. Do not translate script commands, labels, variable names, file names, macro definitions, or tag attributes unless they are visibly displayed.
+1. 从当前游戏版本解出 XP3。
+2. 识别剧本 `.ks` 和相关 `.tjs`。
+3. 只导出玩家可见文本。
+4. 对影响显示的 KAG 标签，保留在 `message` 中。
+5. 不翻译脚本命令、标签、变量名、文件名、宏定义或非显示标签属性。
 
-Important tags and structures to protect:
+需要保护的重要标签和结构：
 
-- `[r]`, `[lr]`, `[p]`, `[l]`, `[cm]`, `[ct]`
-- `[ruby ...]`, `[font ...]`, `[style ...]`
+- `[r]`、`[lr]`、`[p]`、`[l]`、`[cm]`、`[ct]`
+- `[ruby ...]`、`[font ...]`、`[style ...]`
 - `[iscript]... [endscript]`
-- Macro calls and labels such as `*label`
-- Storage/file attributes such as `storage=...`
+- 宏调用和 `*label` 等标签
+- `storage=...` 等文件属性
 
-If a file contains large `[iscript]` blocks, the safest reinsertion approach is to restore the original script block and only replace extracted display strings.
+如果文件包含大段 `[iscript]`，最安全的回填方式是恢复原始脚本块，只替换已经提取出的显示字符串。
 
-## Translation
+## 翻译
 
-- Translate into Simplified Chinese unless the project says otherwise.
-- Keep the JSON order and item count unchanged.
-- Keep `name` when present.
-- Preserve all KAG tags and ruby tag counts.
-- Normalize punctuation for the target engine after translation.
-- Do not leave raw Japanese in visible text unless it is a name, title, or intentionally retained term.
+- 默认翻译为简体中文。
+- JSON 顺序和条数必须不变。
+- 源文有 `name` 时译文也保留。
+- 保留全部 KAG 标签和 ruby 标签数量。
+- 翻译后按目标引擎规范化标点。
+- 除非是名字、标题或有意保留术语，不应在可见文本中残留日文。
 
-## Reinsertion
+## 回填
 
-1. Validate source JSON, translated JSON, and mapping.
-2. Reinsert only into current-version extracted scripts.
-3. Keep control tags and script code byte-for-byte where possible.
-4. Encode output according to the engine behavior. Common choices are UTF-16 LE with BOM, CP932, or UTF-8, but this must be confirmed per title.
-5. Re-extract or inspect the patched script files to confirm the Chinese text is really present.
+1. 校验源 JSON、译文 JSON 和映射。
+2. 只回填到当前版本解包脚本。
+3. 尽量逐字节保留控制标签和脚本代码。
+4. 按引擎实际行为选择输出编码。常见选择有 UTF-16 LE with BOM、CP932、UTF-8，但必须按作品确认。
+5. 回填后重新解包或检查脚本，确认中文确实存在。
 
-If a syntax error appears at runtime, inspect the reported file and line first. Common causes:
+如果运行时报语法错误，优先检查报错文件和行号。常见原因：
 
-- A translated line broke a KAG tag.
-- A quote or bracket was translated inside tag attributes.
-- A `[iscript]` block was accidentally modified.
-- A newline was inserted where KAG expects a single command.
+- 译文破坏 KAG 标签。
+- 标签属性中的引号或括号被翻译。
+- `[iscript]` 块被误改。
+- 在 KAG 期望单行命令的位置插入了换行。
 
-## Font Handling
+## 字体处理
 
-Prefer script-level font changes before binary changes:
+优先使用脚本层修改，再考虑二进制修改：
 
-1. Identify the font family actually used by the game.
-2. Register the required `.ttf` through the game, launcher, or an included helper DLL when available.
-3. Patch KAG/TJS font declarations to use the real font family name.
-4. If a dynamic placeholder such as `face=user` does not work, use the real family name directly.
-5. Test inside the formal dialogue flow, not only the title screen.
+1. 找到游戏实际使用的字体族名。
+2. 通过游戏、启动器或已有辅助 DLL 注册所需 `.ttf`。
+3. 修改 KAG/TJS 字体声明为真实字体族名。
+4. 如果 `face=user` 等动态占位无效，直接使用真实字体族名。
+5. 必须进入正式对白测试，不能只看标题菜单。
 
-When increasing font size, rewrap Chinese lines. Avoid relying on runtime wrapping because many VN message windows produce short orphan lines or overflow.
+字号增大时要重新整理中文换行。许多 VN 文本框的运行时换行会产生孤行或溢出，不要完全依赖它。
 
-## XP3 Packaging
+## XP3 封包
 
-1. Pack only changed scripts, font registration files, and required patch metadata.
-2. Do not include unmodified CG, voice, BGM, or movie archives.
-3. Use a patch name that the game actually loads, such as `patch_chs.xp3`, `patch.xp3`, or a higher-priority numbered patch.
-4. Re-extract the final XP3 to verify paths and encodings.
-5. Test the patch against a clean copy of the current game version.
+1. 只封修改脚本、字体注册文件和必要补丁元数据。
+2. 不包含未修改的 CG、语音、BGM 或视频封包。
+3. 使用游戏实际会加载的补丁名，如 `patch_chs.xp3`、`patch.xp3` 或更高优先级编号补丁。
+4. 重新解包最终 XP3，验证路径和编码。
+5. 在干净的当前版本本体上测试补丁。
 
-## Runtime QA
+## 实机 QA
 
-Minimum QA:
+最低 QA：
 
-- First launch.
-- Title screen.
-- Start into formal dialogue.
-- Load page and log page.
-- Config and text speed dialogs.
-- Auto/skip/Ctrl skip.
-- Choice branches.
-- Extra, gallery, scene, and music pages when present.
-- Font rendering and line wrapping.
-- Crash dialogs and syntax error dialogs.
+- 首次启动。
+- 标题页。
+- Start 进入正式对白。
+- Load 页和 Log 页。
+- Config 和文本速度弹窗。
+- Auto / Skip / Ctrl Skip。
+- 选项分支。
+- 存在 Extra、Gallery、Scene、Music 页时也要测试。
+- 字体渲染和换行。
+- 崩溃弹窗和语法错误弹窗。
 
-Save screenshots and reports under `games/<game>/work/reports` or the project-specific QA folder.
+截图和报告保存到 `games/<game>/work/reports` 或项目专用 QA 目录。

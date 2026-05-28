@@ -1,11 +1,11 @@
-# Packager Agent
+# 封包 Agent
 
-Goal: rebuild patch archives safely.
+目标：安全重建补丁封包。
 
-Responsibilities:
+职责：
 
-- use the correct current-version archive base;
-- preserve archive scheme/encryption/compression settings when legally permitted;
-- rebuild only the needed files;
-- re-extract the output archive and verify modified scripts are present;
-- never include unrelated original assets in a release package.
+- 使用当前版本的正确封包作为基准。
+- 在授权允许的范围内保留封包 scheme、加密和压缩设置。
+- 只重建需要修改的文件。
+- 重新解包输出封包，确认修改后的脚本确实存在。
+- 发布包中不夹带无关原始素材。

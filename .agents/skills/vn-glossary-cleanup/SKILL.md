@@ -1,57 +1,57 @@
 ---
 name: vn-glossary-cleanup
-description: Clean glossary files generated from game text extraction, using output.json and output_detail.txt.
+description: 清理游戏文本提取生成的术语表，输入通常为 output.json 和 output_detail.txt。
 ---
 
-# VN Glossary Cleanup
+# VN 术语表清理
 
-Use this skill when a text-extraction pass creates a glossary folder such as `output`.
+当文本提取生成 `output` 之类术语表目录时使用。
 
-## Inputs
+## 输入
 
 - `output/output.json`
 - `output/output_detail.txt`
 
-## Keep
+## 保留
 
-Prefer keeping:
+优先保留：
 
-- character names
-- place names
-- organization names
-- title-specific proper nouns
-- system terms
-- UI terms
-- repeated phrases with stable meaning
+- 角色名
+- 地名
+- 组织名
+- 作品专有名词
+- 系统术语
+- UI 术语
+- 具有稳定含义的重复短语
 
-## Remove
+## 删除
 
-Remove entries that are not useful terminology:
+删除不适合作为术语的条目：
 
-- mojibake
-- script commands
-- variables
-- resource IDs
-- pure punctuation
-- unstable single characters
-- bad segmentation artifacts
-- strings that only appear in command or debug lines
-- generic words that do not help translation consistency
+- 乱码
+- 脚本命令
+- 变量
+- 资源 ID
+- 纯标点
+- 不稳定单字
+- 分词错误碎片
+- 只出现在命令或调试行里的字符串
+- 对一致性帮助不大的泛用词
 
-## Workflow
+## 流程
 
-1. Back up the glossary files.
-2. Read detail sources for each term.
-3. Remove unclear or unsafe entries.
-4. Keep `output.json` and `output_detail.txt` synchronized.
-5. Write a cleanup report.
+1. 备份术语表文件。
+2. 查看每个术语的明细来源。
+3. 删除含义不明或不安全条目。
+4. 保持 `output.json` 和 `output_detail.txt` 同步。
+5. 写出清理报告。
 
-## Project Script
+## 项目脚本
 
-If automation is needed, place game-specific scripts under:
+需要自动化时，单游戏脚本放在：
 
 ```text
 games/<game>/work/scripts/
 ```
 
-Check path constants before running a cleanup script.
+运行前检查路径常量。

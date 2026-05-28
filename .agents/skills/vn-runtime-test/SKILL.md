@@ -1,72 +1,72 @@
 ---
 name: vn-runtime-test
-description: Automate runtime QA for Windows visual novel patches with clicks, Ctrl skip, branching, screenshots, crash and hang detection.
+description: 自动化测试 Windows 视觉小说补丁，包括点击、Ctrl 跳过、分支、截图、闪退和卡死检测。
 ---
 
-# VN Runtime Test
+# VN 实机测试
 
-Use this skill after reinsertion or packaging to test the real Windows game window.
+回填或封包后，使用这个 Skill 测试真实 Windows 游戏窗口。
 
-## Principles
+## 原则
 
-- Record the exact exe path and working directory before each run.
-- Test the current body or current release package, not another same-named game elsewhere.
-- Save screenshots and reports under the current game's `work` directory.
-- Use timeouts for launch, loading, skip, and menu operations.
-- Preserve user saves by backing up `save`, `savedata`, or similar folders before destructive tests.
+- 每次运行前记录准确 exe 路径和工作目录。
+- 测试当前本体或当前发布包，不误开其他同名游戏。
+- 截图和报告保存到当前游戏的 `work` 目录。
+- 启动、载入、跳过和菜单操作都要设置超时。
+- 破坏性测试前备份 `save`、`savedata` 等用户存档目录。
 
-## Suggested Automation Stack
+## 建议自动化栈
 
-On Windows, Python automation can use:
+Windows 下 Python 自动化可使用：
 
 - `subprocess.Popen`
 - `win32gui.EnumWindows`
 - `win32api`
 - `PIL.ImageGrab`
-- `pywinauto` when installed and useful
+- 已安装且合适时使用 `pywinauto`
 
-Use whichever stack is already available in the project. Keep scripts project-local.
+优先使用项目内已经可用的栈。脚本保留在项目或游戏工作目录内。
 
-## Standard Test Path
+## 标准测试路径
 
-1. Launch the exe.
-2. Wait for the window.
-3. Screenshot the first visible screen.
-4. Reach the title or main menu.
-5. Start a new game and wait long enough for formal dialogue.
-6. Load slot 1 if available.
-7. Open save, load, log, and config screens.
-8. Test extra/gallery/scene/music screens when present.
-9. Hold Ctrl or trigger skip for a controlled interval.
-10. Traverse choices if the project needs branch coverage.
+1. 启动 exe。
+2. 等待窗口出现。
+3. 截图第一屏。
+4. 到达标题或主菜单。
+5. 开始新游戏，并等待足够长时间进入正式对白。
+6. 如果有存档，载入 1 号槽。
+7. 打开 Save、Load、Log、Config。
+8. 存在 Extra / Gallery / Scene / Music 时也测试。
+9. 控制时长地按住 Ctrl 或触发 Skip。
+10. 项目需要分支覆盖时遍历选项。
 
-## Branch Testing
+## 分支测试
 
-For choice-heavy games:
+对于选项较多的游戏：
 
-- screenshot each choice screen
-- assign a path ID to each branch
-- test until ending, title return, known repeated state, crash, or timeout
-- record the path and outcome
+- 每个选项画面都截图。
+- 给每条路径分配 path ID。
+- 测到结局、回到标题、已知重复状态、闪退或超时为止。
+- 记录路径和结果。
 
-## Issues To Record
+## 需要记录的问题
 
-- foreground window never appears
-- black screen timeout
-- long `Accessing...` or loading screen
-- mojibake in dialogue, menus, save/load, or errors
-- text overflow or broken wrapping
-- font hook not applied
-- crash dialogs
-- syntax errors
-- gallery or extra menu crashes
-- skip hangs around OP/movie/time-card transitions
+- 前台窗口不出现。
+- 黑屏超时。
+- 长时间 `Accessing...` 或载入画面。
+- 对白、菜单、存读档或错误弹窗乱码。
+- 文本溢出或换行错误。
+- 字体 hook 没生效。
+- 崩溃弹窗。
+- 语法错误。
+- Gallery 或 Extra 菜单闪退。
+- Skip 在 OP、影片、时间卡附近卡死。
 
-## Output
+## 输出
 
-Recommended outputs:
+推荐输出：
 
 - `work/reports/runtime_qa_<date>.md`
 - `work/reports/screenshots_<date>/`
-- crash or hang screenshots
-- exact command and exe path used
+- 闪退或卡死截图
+- 实际使用的命令和 exe 路径

@@ -1,49 +1,49 @@
 ---
 name: vn-release-packaging
-description: Build a clean Chinese patch release folder for non-RPG visual novel projects.
+description: 为非 RPG 视觉小说项目构建干净的中文补丁发布目录。
 ---
 
-# VN Release Packaging
+# VN 发布打包
 
-Use this skill when preparing a player-facing Chinese patch release folder.
+准备面向玩家的中文补丁发布目录时使用。
 
-## Preflight
+## 打包前确认
 
-Confirm before packaging:
+打包前确认：
 
-- The patched game launches from a clean current-version body.
-- The release exe, if included, is based on the current-version exe.
-- Script archives were rebuilt from current-version files.
-- Required fonts and configuration files are present.
-- `.ini` files and readme files are UTF-8.
-- No `_work`, save data, screenshots, extracted assets, or temporary tools are included.
+- 补丁游戏能从干净的当前版本本体启动。
+- 如果包含发布 exe，该 exe 基于当前版本 exe。
+- 脚本封包由当前版本文件重建。
+- 必需字体和配置文件存在。
+- `.ini` 和 readme 文件为 UTF-8。
+- 不包含 `_work`、存档、截图、解包素材或临时工具。
 
-## Include Only What Players Need
+## 只包含玩家需要的内容
 
-Common release contents:
+常见发布内容：
 
-- Patched exe when needed for Chinese display.
-- Modified script or text archive.
-- Font launcher or helper DLL when required.
-- Font files required by the patch.
-- UTF-8 configuration files.
-- Usage instructions.
+- 中文显示需要时的补丁 exe。
+- 修改后的脚本或文本封包。
+- 必需时的字体启动器或辅助 DLL。
+- 补丁所需字体文件。
+- UTF-8 配置文件。
+- 使用说明。
 
-Do not include:
+不要包含：
 
-- Unmodified CG archives.
-- Unmodified voice archives.
-- Unmodified BGM archives.
-- Movies unless actually patched and redistributable.
-- Extracted raw assets.
-- Test screenshots.
-- Save folders.
-- Old patch files for a different game version.
-- Temporary analysis files.
+- 未修改的 CG 封包。
+- 未修改的语音封包。
+- 未修改的 BGM 封包。
+- 未实际修改或不可分发的视频。
+- 解包原始素材。
+- 测试截图。
+- 存档文件夹。
+- 其他游戏版本的旧补丁文件。
+- 临时分析文件。
 
-## Generic Layouts
+## 通用布局
 
-Kirikiri / XP3:
+Kirikiri / XP3：
 
 ```text
 <game>_CHS_patch/
@@ -53,7 +53,7 @@ Kirikiri / XP3:
 └─ README.txt
 ```
 
-LiLiM / AOS:
+LiLiM / AOS：
 
 ```text
 <game>_CHS_patch/
@@ -64,27 +64,28 @@ LiLiM / AOS:
 └─ README.txt
 ```
 
-HSP / DPM:
+Bruns / EENC / EENZ：
 
 ```text
 <game>_CHS_patch/
 ├─ <game>_chs.exe
-├─ <text_archive>.dpm
-├─ <extra_text_archive>.dpm
+├─ ams.cfg
+├─ scene/
+│  └─ <patched>.bso
 └─ README.txt
 ```
 
-## Self Test
+## 自测
 
-After packaging:
+打包后：
 
-1. Copy the release files onto a clean current-version game body.
-2. Launch the game from that clean body.
-3. Enter formal dialogue.
-4. Open save, load, log, config, and extra screens.
-5. Verify font, wrapping, mojibake, and crash behavior.
-6. Store QA screenshots in the project work folder, not in the release folder.
+1. 把发布文件复制到干净的当前版本本体。
+2. 从该本体启动游戏。
+3. 进入正式对白。
+4. 打开 Save、Load、Log、Config 和 Extra。
+5. 检查字体、换行、乱码和闪退行为。
+6. QA 截图保存在项目工作目录，不放进发布目录。
 
-## Archive
+## 压缩
 
-Create a `.7z` or `.zip` from the release folder only. Do not archive the parent work folder.
+只从发布目录创建 `.7z` 或 `.zip`，不要压缩父级工作目录。

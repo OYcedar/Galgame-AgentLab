@@ -1,19 +1,13 @@
-# Workflows
+# 工作流程
 
-- [Bruns / EENC / EENZ Patch Workflow](bruns-eenz-patch.md)
-- [HSP / DPM Patch Workflow](hsp-dpm-patch.md)
-- [Kirikiri XP3 Patch Workflow](kirikiri-xp3-patch.md)
-- [LiLiM AOS Patch Workflow](lilim-aos-patch.md)
+工作流程负责把多个 Agent 和一个或多个 Skill 串成可重复执行的补丁制作步骤。
 
-Workflows chain agents and skills into repeatable procedures.
+当前维护的流程：
 
-Current workflow families:
+- [Bruns / EENC / EENZ 补丁流程](bruns-eenz-patch.md)
+- [Kirikiri XP3 补丁流程](kirikiri-xp3-patch.md)
+- [LiLiM AOS 补丁流程](lilim-aos-patch.md)
+- [发布 QA 流程](release-qa.md)
+- [未知引擎初筛流程](unknown-engine-triage.md)
 
-- `unknown-engine-triage.md`
-- `bruns-eenz-patch.md`
-- `kirikiri-xp3-patch.md`
-- `lilim-aos-patch.md`
-- `hsp-dpm-patch.md`
-- `release-qa.md`
-
-LiveMaker / LiveNovel workflows are intentionally not included.
+本项目不维护 LiveMaker / LiveNovel、RPG Maker、HSP / DPM 工作流程。

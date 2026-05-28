@@ -1,6 +1,8 @@
-# Text Format
+# 文本格式
 
-External translation files use SExtractor JSON.
+## 外部翻译格式
+
+所有外部翻译交付默认使用 SExtractor JSON：
 
 ```json
 [
@@ -14,13 +16,33 @@ External translation files use SExtractor JSON.
 ]
 ```
 
-Rules:
+## 字段规则
 
-- UTF-8 JSON.
-- Top-level value is an array.
-- Every item has `message`.
-- `name` is optional and only used when a speaker exists.
-- Order must match source script order.
-- Reinsertion metadata goes in a separate map file.
+- 顶层必须是数组。
+- 每条记录必须包含 `message`。
+- `name` 只在原文存在说话人时保留。
+- 顺序必须与原脚本出现顺序一致。
+- JSON 文件使用 UTF-8。
 
-Do not expose internal fields such as file path, line number, offset, archive name, or command context to external translators unless explicitly needed.
+## 映射文件
+
+不要把以下信息交给外部翻译方：
+
+- 文件名。
+- 偏移。
+- 行号。
+- 原始字节范围。
+- 命令上下文。
+- 回填策略。
+
+这些信息应放在内部 map 文件里，用于回填和 QA。
+
+## 校验
+
+回填前至少校验：
+
+- 源 JSON 与译文 JSON 条数一致。
+- 字段结构一致。
+- 控制符、标签和占位符保留。
+- 译文可编码到目标脚本编码。
+- 没有空译文或明显未翻译文本。

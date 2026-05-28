@@ -1,5 +1,5 @@
-# Tests
+# 测试
 
-Put lightweight regression tests here.
+这里放轻量级回归测试。
 
-Project-specific runtime tests should stay with their game workspace and should not include game assets.
+单个游戏的实机测试应保留在该游戏工作目录中，不应包含游戏素材。

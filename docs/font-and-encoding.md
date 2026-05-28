@@ -1,32 +1,36 @@
-# Font And Encoding Notes
+# 字体与编码
 
-## Encoding
+## 默认原则
 
-- Japanese VN scripts often use CP932 / Shift-JIS.
-- Chinese old-engine patches often need GBK or GB18030.
-- UTF-8 is the default for project docs, JSON, reports, and config files.
+- 文档、报告、配置和 JSON 默认使用 UTF-8。
+- 原始日文脚本常见编码是 CP932 / Shift-JIS。
+- 老引擎中文补丁常见目标编码是 GBK 或 GB18030。
+- 回填前必须确认目标引擎实际读取的编码。
 
-Always test target encoding before repacking.
+## 字体处理
 
-## Font Strategy
+- 先定位游戏实际使用的字体配置或脚本声明。
+- 优先使用脚本或配置层面的字体设置。
+- 只有在实机证明必须时，才修改 exe 或使用字体 hook。
+- 字体效果必须在正式对白流程中测试，不能只看标题菜单。
+- 字号变大后必须同步检查自动换行、日志、存档摘要和选项菜单。
 
-Font file name and font family name are different.
+## 高风险字符
 
-Example:
+旧引擎中需要重点检查：
 
-- file: `WenQuanYi-Regular.ttf`
-- family: `WenQuanYi Micro Hei`
+- 省略号、波浪线、长音号。
+- 日文引号、书名号、全角冒号。
+- 心形、音符、星号、特殊项目符号。
+- 半角英文数字和半角标点。
+- Shift-JIS 私有区或在 GBK 下会乱码的符号。
 
-Some engines require:
+## 回滚规则
 
-- external font registration before launch;
-- static real family names in scripts;
-- menu/history/dialog patches in separate TJS/KAG files.
+字体实验如果没有实机改善，必须撤回：
 
-Always test:
-
-- formal dialogue;
-- log/history;
-- save/load;
-- option dialogs;
-- title and menu text.
+- 启动器。
+- `.ini` 配置。
+- 用户字体注册。
+- 发布目录中的字体文件。
+- 不必要的 exe 改动。

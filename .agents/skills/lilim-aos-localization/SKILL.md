@@ -1,24 +1,24 @@
 ---
 name: lilim-aos-localization
-description: Localize LiLiM / Le.Chocolat AOS visual novels, including scr.aos extraction, SExtractor JSON, GBK-safe script repair, AOSv2 repacking, embedded exe patching, font config, and runtime QA.
+description: 本地化 LiLiM / Le.Chocolat AOS 视觉小说，包括 scr.aos 提取、SExtractor JSON、GBK 安全脚本修复、AOSv2 重封包、嵌入 exe 补丁、字体配置和实机 QA。
 ---
 
-# LiLiM / AOS Localization
+# LiLiM / AOS 本地化
 
-Use this skill for authorized LiLiM, Le.Chocolat, and related AOS visual novel projects.
+用于授权范围内的 LiLiM、Le.Chocolat 及相关 AOS 视觉小说项目。
 
-## Engine Evidence
+## 引擎证据
 
-Common evidence:
+常见证据：
 
-- `*.aos` archives.
-- Extracted `*.scr` scripts.
-- Script commands such as `var`, `^go(...)`, `^gsb(...)`, `bgmoff`, `fnt(...)`, `wnd(...)`, or `wbl(...)`.
-- Old Windows VN executables that may embed `scr.aos` inside a wrapper.
+- `*.aos` 封包。
+- 解包后的 `*.scr` 脚本。
+- `var`、`^go(...)`、`^gsb(...)`、`bgmoff`、`fnt(...)`、`wnd(...)`、`wbl(...)` 等命令。
+- 可能把 `scr.aos` 嵌入包装器的旧 Windows VN 可执行文件。
 
-## Workspace
+## 工作目录
 
-Use a per-game workspace:
+使用单游戏工作区：
 
 ```text
 games/<game>/
@@ -34,116 +34,109 @@ games/<game>/
 └─ release/
 ```
 
-Do not put temporary exe, dll, extracted script dumps, or one-off analysis files in the repository root.
+不要把临时 exe、dll、脚本 dump 或一次性分析文件放到仓库根目录。
 
-## Extraction
+## 提取
 
-1. Confirm the AOS archive layout before decoding.
-2. Extract script files into `work/decoded`.
-3. Export SExtractor JSON for external translation.
-4. Store file names, line positions, script contexts, and encodings in an internal map.
-5. Do not export script commands, labels, variable declarations, comments, or debug parameters as dialogue.
+1. 解码前先确认 AOS 封包布局。
+2. 把脚本提取到 `work/decoded`。
+3. 导出外部翻译用 SExtractor JSON。
+4. 文件名、行位置、脚本上下文和编码保存在内部映射。
+5. 不要把脚本命令、标签、变量声明、注释或调试参数导出为对白。
 
-Known non-dialogue examples:
+已知非对白示例：
 
-- `^gsb(VAR)`
-- `%route`
-- `^go(TITLE)`
-- `var %temp`
-- Comment lines beginning with `#`
+```text
+^gsb(VAR)
+%route
+^go(TITLE)
+var %temp
+# comment
+```
 
-## Script Reinsertion
+## 脚本回填
 
-- Old AOS engines commonly require GBK or GB18030 output for Chinese patches.
-- Do not write UTF-8 Chinese into scripts unless the current executable has been verified to support it.
-- Only visible dialogue, names, menu text, time cards, and choices should be localized.
-- Keep engine commands in halfwidth ASCII.
-- Never fullwidth-convert command lines, labels, variable names, or function calls.
+- 旧 AOS 引擎中文补丁通常需要 GBK 或 GB18030。
+- 除非当前 exe 已验证支持 UTF-8，否则不要把 UTF-8 中文写入脚本。
+- 只本地化可见对白、名字、菜单文本、时间卡和选项。
+- 引擎命令保持半角 ASCII。
+- 不要把命令行、标签、变量名或函数调用全角化。
 
-After reinsertion, scan command-like lines by NFKC normalization. If a normalized line matches a known script command shape, restore it to the original command form.
+回填后按 NFKC 归一化扫描疑似命令行。如果归一化后匹配已知脚本命令形态，应恢复为原始命令形式。
 
-## Character Rules
+## 字符规则
 
-GBK-targeted AOS projects often show mojibake when Shift-JIS punctuation or Japanese symbols remain in visible text. Fix visible text conservatively:
+GBK 目标的 AOS 项目，如果可见文本中残留 Shift-JIS 标点或日文符号，经常会乱码。修复要保守：
 
-- Convert visible halfwidth English and digits to the old-patch style only when they are ordinary displayed prose.
-- Keep script syntax and command arguments halfwidth.
-- Standalone time cards should follow the old patch's known safe fullwidth style.
-- Replace Shift-JIS residue, hearts, music notes, wave dashes, Japanese quote marks, and special punctuation with characters the target encoding and font can render.
-- Treat choice delimiters as syntax. Only edit the visible choice text inside the delimiter.
-- If the archive grows too large for an embedded slot, shrink comments first. Do not shorten visible text or commands just to fit.
+- 只在普通可见正文中按旧补丁风格转换半角英文和数字。
+- 脚本语法和命令参数保持半角。
+- 独立时间卡遵循旧补丁已知安全的全角风格。
+- 替换 Shift-JIS 残留、心形、音符、波浪线、日文引号和特殊标点为目标编码与字体可显示字符。
+- 选项分隔符视为语法，只编辑分隔符内部的可见选项文本。
+- 如果封包超过嵌入槽大小，先缩短注释。不要为了塞进槽位而删改可见文本或命令。
 
-When an old patch exists, use it as a style reference, not as a base file. Never mix an old-version full archive into a new-version body.
+有旧补丁时，只把它作为风格参考。不要把旧版本完整封包混入新版本本体。
 
-## AOSv2 Repacking
+## AOSv2 重封包
 
-Some AOSv2 entries are stored as:
+部分 AOSv2 条目结构为：
 
 ```text
 uint32 unpacked_size
 custom compressed body
 ```
 
-When rebuilding an index, the entry size must include the four-byte unpacked size header plus the compressed body length.
+重建索引时，条目大小必须包含 4 字节解包大小头加压缩体长度。
 
-Recommended flow:
+推荐流程：
 
-1. Use the original archive as the file-order template.
-2. Rebuild each modified `.scr`.
-3. Preserve the original file order and unmodified entries.
-4. Verify that each index `offset + size` matches the next entry offset.
-5. Re-extract the rebuilt archive and inspect boot scripts, title scripts, variable scripts, and several scenario files.
+1. 使用原始封包作为文件顺序模板。
+2. 重建每个修改过的 `.scr`。
+3. 保留原始文件顺序和未修改条目。
+4. 校验每个索引的 `offset + size` 等于下一条目 offset。
+5. 重新解包重建封包，检查启动脚本、标题脚本、变量脚本和若干场景文件。
 
-The helper scripts in this skill's `scripts/` directory are meant to be called with project-local paths, for example:
+## 嵌入 exe 补丁
 
-```powershell
-python .agents\skills\lilim-aos-localization\scripts\pack_aosv2_entrysize.py `
-  --scr-dir games\<game>\work\decoded\patched `
-  --template games\<game>\work\aos\scr_original.aos `
-  --output games\<game>\work\aos\scr_chs.aos
-```
+有些中文补丁会把 `scr.aos` 嵌入修改后的 exe。
 
-## Embedded Exe Patching
+安全做法：
 
-Some Chinese patches embed `scr.aos` inside a modified executable.
+1. 使用当前版本 exe 作为基准。
+2. 旧补丁行为只用来找线索。
+3. 通过精确旧封包字节或已验证偏移定位嵌入槽。
+4. 确认新封包能放入槽位。
+5. 写入新封包，并把剩余字节清零。
+6. 除非已经验证结果 exe 能进入前台并到达标题菜单，否则不要修改包装器元数据。
 
-Safe approach:
+## 字体与换行
 
-1. Keep the current-version executable as the base.
-2. Compare old patch behavior only for clues.
-3. Locate the embedded archive slot by exact old archive bytes or verified offset metadata.
-4. Ensure the new archive fits the slot.
-5. Write the new archive into the slot and zero-fill the remaining bytes.
-6. Avoid modifying wrapper metadata unless you have verified the resulting exe enters the foreground and reaches the title menu.
+字体启动器通常处理下列事项之一：
 
-## Font And Wrapping
+- 临时注册 TTF。
+- 读取 UTF-8 `.ini` 配置。
+- 修改存档/系统数据或脚本字体设置。
 
-Font launchers usually handle one or more of these tasks:
+对白字号和换行常由脚本控制：
 
-- Temporarily register a TTF file.
-- Read a UTF-8 `.ini` configuration.
-- Patch save/system data or script font settings.
+- `fnt(...)` 控制字号和样式。
+- `wnd(...)` 可能控制文本框行宽。
+- `wbl(...)` 可能控制 backlog 行宽。
 
-Dialogue size and wrapping are often controlled by scripts:
+字号增大时要减少行宽并进入正式流程测试。不要只依赖启动器设置，如果封包脚本仍设置较小字体，启动器可能无效。
 
-- `fnt(...)` controls font size and style.
-- `wnd(...)` can control message window line width.
-- `wbl(...)` can control backlog line width.
+## 实机 QA
 
-When increasing font size, reduce line width and test the formal dialogue flow. Do not rely on a launcher setting if the packed scripts still set a smaller font.
+最低 QA：
 
-## Runtime QA
+- 首次启动到标题菜单。
+- Start 进入正式对白。
+- Load slot 1 进入可见对白。
+- Save、Load、Backlog 页显示中文可读。
+- Extra、CG、Scene Replay、Music 页不闪退。
+- Ctrl Skip 在 OP、影片、时间卡附近不卡死。
+- 不出现 `var %temp`、`%route`、`^go(...)` 等命令文本。
+- 可见文本中没有 GBK 乱码。
+- 字体启动器必须在正式对白验证，不只看标题菜单。
 
-Minimum QA:
-
-- First launch reaches the title menu.
-- Start reaches formal dialogue.
-- Load slot 1 reaches visible dialogue.
-- Save, load, and backlog pages show readable Chinese.
-- Extra, CG, scene replay, and music pages do not crash.
-- Ctrl skip does not hang around movies, OP cards, or time cards.
-- No visible command text such as `var %temp`, `%route`, or `^go(...)`.
-- No GBK mojibake remains in visible text.
-- Font launcher is verified in formal dialogue, not just the title menu.
-
-Save screenshots and reports under the current game's `work/reports` folder.
+截图和报告保存到当前游戏的 `work/reports`。

@@ -1,13 +1,13 @@
 ---
 name: vn-sextractor-json
-description: Extract and validate external translation JSON in SExtractor format for all non-RPG game projects.
+description: 为所有非 RPG 游戏项目提取并校验 SExtractor 格式的外部翻译 JSON。
 ---
 
 # SExtractor JSON
 
-All external translation handoff files should use SExtractor JSON unless the project explicitly requires another format.
+除非项目明确要求其他格式，所有外部翻译交付文件都应使用 SExtractor JSON。
 
-## Format
+## 格式
 
 ```json
 [
@@ -25,38 +25,38 @@ All external translation handoff files should use SExtractor JSON unless the pro
 ]
 ```
 
-Rules:
+规则：
 
-- UTF-8 JSON.
-- Top-level value is an array.
-- Every item has `message`.
-- `name` appears only when a speaker exists.
-- Order matches the original script order.
-- Metadata for reinsertion goes in a separate map file.
+- JSON 使用 UTF-8。
+- 顶层值是数组。
+- 每条都有 `message`。
+- 只有存在说话人时才写 `name`。
+- 顺序与原脚本出现顺序一致。
+- 回填元数据放在单独映射文件中。
 
-## Extract
+## 提取
 
-Export only player-visible text:
+只导出玩家可见文本：
 
-- dialogue
-- speaker names
-- choices
-- menu text
-- system prompts
-- scene titles when visibly shown
+- 对白
+- 说话人名字
+- 选项
+- 菜单文本
+- 系统提示
+- 可见场景标题
 
-Do not export:
+不要导出：
 
-- labels
-- variable names
-- debug parameters
-- command names
-- file names
-- resource IDs
-- comments
-- script-only control lines
+- 标签
+- 变量名
+- 调试参数
+- 命令名
+- 文件名
+- 资源 ID
+- 注释
+- 只用于脚本控制的行
 
-Known non-dialogue examples:
+已知非对白示例：
 
 ```text
 ^gsb(VAR)
@@ -65,36 +65,36 @@ Known non-dialogue examples:
 var %temp
 ```
 
-## Validate
+## 校验
 
-Before reinsertion:
+回填前检查：
 
-- source and translation parse as JSON
-- both top-level values are arrays
-- item counts match
-- every item has `message`
-- `name` presence matches the source unless intentionally changed
-- control tags and placeholders are preserved
-- messages are encodable in the target engine encoding
-- empty translations are reported
-- obvious source-language residue is reported for review
+- 源文和译文都能作为 JSON 解析。
+- 顶层值都是数组。
+- 条数一致。
+- 每条都有 `message`。
+- 除非有意修改，`name` 出现情况与源文一致。
+- 控制标签和占位符被保留。
+- `message` 能编码到目标引擎编码。
+- 空译文被报告。
+- 明显源语言残留被报告供复核。
 
-## Naming
+## 命名
 
-Recommended names:
+推荐文件名：
 
-- source: `<game>_sextractor.json`
-- translation: `<game>_sextractor_trans.json`
-- internal map: `<game>_sextractor_map.json`
-- validation report: `<game>_sextractor_validation.json`
+- 源文：`<game>_sextractor.json`
+- 译文：`<game>_sextractor_trans.json`
+- 内部映射：`<game>_sextractor_map.json`
+- 校验报告：`<game>_sextractor_validation.json`
 
-## Pre-Reinsertion Cleanup
+## 回填前清理
 
-Depending on engine behavior, normalize:
+根据引擎行为规范化：
 
-- ASCII punctuation
-- halfwidth English and digits in visible prose
-- Japanese quotes
-- ellipses and wave dashes
-- hearts, music notes, sweat marks, and other symbols
-- fixed-width dialogue wrapping
+- ASCII 标点
+- 可见正文中的半角英文和数字
+- 日文引号
+- 省略号和波浪线
+- 心形、音符、汗滴等特殊符号
+- 固定宽度对白换行

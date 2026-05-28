@@ -1,43 +1,43 @@
 # AGENTS.md
 
-## Purpose
+## 项目目的
 
-This repository is for authorized Galgame and visual novel localization workflows on Windows.
+本仓库用于授权范围内的 Windows Galgame 与视觉小说本地化工作流。
 
-It uses an agent model:
+项目采用 Agent 模型：
 
-- agents describe responsibilities;
-- skills describe engine-specific knowledge;
-- workflows describe end-to-end procedures.
+- `agents/` 描述职责分工；
+- `.agents/skills/` 描述引擎专用知识；
+- `workflows/` 描述端到端流程。
 
-## Scope
+## 范围
 
-Supported:
+支持：
 
 - Kirikiri Z / KAG / XP3
 - LiLiM / Le.Chocolat AOS
-- HSP / DPM
 - Bruns / EENC / EENZ
-- unknown non-RPG VN engine analysis
-- SExtractor JSON extraction, translation, reinsertion, packaging, and runtime QA
+- 未知非 RPG VN 引擎分析
+- SExtractor JSON 提取、翻译、回填、封包和实机 QA
 
-Out of scope:
+不支持：
 
 - LiveMaker / LiveNovel
 - RPG Maker
-- DRM bypass, activation bypass, anti-tamper bypass, or license circumvention
+- HSP / DPM
+- DRM 绕过、激活绕过、反篡改绕过或授权规避
 
-## Search
+## 搜索
 
-On the originating Windows machine, `rg` may be unavailable or refused. Prefer PowerShell-native search:
+来源 Windows 机器上 `rg` 可能不可用或被拒绝。优先使用 PowerShell 原生命令：
 
 ```powershell
 Get-ChildItem -Recurse -File | Select-String -Pattern "text"
 ```
 
-## External Translation Format
+## 外部翻译格式
 
-All external translation JSON should use SExtractor format by default:
+所有外部翻译 JSON 默认使用 SExtractor 格式：
 
 ```json
 [
@@ -51,24 +51,24 @@ All external translation JSON should use SExtractor format by default:
 ]
 ```
 
-Keep file names, offsets, line numbers, command context, and reinsertion metadata in a separate map file.
+文件名、偏移、行号、命令上下文和回填元数据必须放在单独的 map 文件里。
 
-## Encoding
+## 编码
 
-- JSON, reports, docs, and configs default to UTF-8.
-- Original Japanese scripts often use CP932 / Shift-JIS.
-- Old Chinese patches may need GBK or GB18030.
-- Do not write UTF-8 Chinese into old engines that require GBK.
-- Validate target encoding before repacking.
+- JSON、报告、文档和配置默认使用 UTF-8。
+- 日文原脚本常见编码是 CP932 / Shift-JIS。
+- 老引擎中文补丁可能需要 GBK 或 GB18030。
+- 不要把 UTF-8 中文直接写进只支持 GBK 的旧引擎脚本。
+- 回填前必须验证目标编码。
 
-## File Discipline
+## 文件纪律
 
-- Do not place temporary files in the repository root.
-- Per-game temporary files belong under `games/<game>/_work`.
-- Common reusable scripts belong under `tools`.
-- Engine skills belong under `.agents/skills`.
-- Do not commit game bodies, unpacked original assets, saves, debug screenshots, generated 7z archives, API keys, or local model settings.
+- 不要在仓库根目录放临时文件。
+- 单个游戏临时文件放在 `games/<game>/_work` 或该工作流指定的 `work` 目录。
+- 通用脚本放在 `tools`。
+- 引擎 skill 放在 `.agents/skills`。
+- 不提交游戏本体、解包原始素材、存档、调试截图、生成的 7z 压缩包、API Key 或本地模型配置。
 
-## Image Translation
+## 图片翻译
 
-When translating image-based game text, use the project's image translation workflow only. Do not silently substitute a different OCR or image editing workflow.
+游戏内图片文字必须走项目指定的图片翻译流程。不要静默替换为其他 OCR 或图片编辑流程。

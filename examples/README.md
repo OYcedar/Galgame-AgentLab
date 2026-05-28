@@ -1,5 +1,5 @@
-# Examples
+# 示例
 
-Put small, synthetic examples here.
+这里放小型、合成的示例文件。
 
-Do not commit commercial game scripts, extracted assets, saves, screenshots, API keys, or full translated game data.
+不要提交商业游戏脚本、解包素材、存档、截图、API Key 或完整翻译数据。
