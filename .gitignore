@@ -10,7 +10,6 @@ _work/
 # Game/archive outputs
 *.xp3
 *.aos
-*.dpm
 *.wolf
 *.rgss*
 *.7z

@@ -10,4 +10,4 @@
 - [发布 QA 流程](release-qa.md)
 - [未知引擎初筛流程](unknown-engine-triage.md)
 
-本项目不维护 LiveMaker / LiveNovel、RPG Maker、HSP / DPM 工作流程。
+本项目不维护 LiveMaker / LiveNovel 和 RPG Maker 工作流程。

@@ -15,5 +15,4 @@
 | --- | --- |
 | LiveMaker / LiveNovel | 本仓库刻意不维护该引擎 |
 | RPG Maker | 使用独立的 RPG 工作流项目 |
-| HSP / DPM | 本项目不再维护该引擎流程 |
 | DRM / 激活 / 反篡改目标 | 不支持 |

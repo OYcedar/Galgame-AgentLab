@@ -18,4 +18,4 @@
 - 推荐工具。
 - 本项目是否支持。
 
-本项目排除 LiveMaker / LiveNovel、RPG Maker、HSP / DPM。
+本项目排除 LiveMaker / LiveNovel 和 RPG Maker。

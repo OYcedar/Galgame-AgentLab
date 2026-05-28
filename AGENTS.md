@@ -24,7 +24,6 @@
 
 - LiveMaker / LiveNovel
 - RPG Maker
-- HSP / DPM
 - DRM 绕过、激活绕过、反篡改绕过或授权规避
 
 ## 搜索

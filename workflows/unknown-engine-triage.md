@@ -12,7 +12,6 @@
 
 - LiveMaker / LiveNovel
 - RPG Maker
-- HSP / DPM
 - DRM、激活、授权校验或反篡改绕过
 
 报告至少包含：

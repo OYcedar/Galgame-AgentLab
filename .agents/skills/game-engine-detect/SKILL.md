@@ -56,7 +56,6 @@ description: 在授权本地化项目中识别非 RPG Windows 游戏引擎，再
 
 - LiveMaker / LiveNovel。
 - RPG Maker 工作流。
-- HSP / DPM 工作流。
 - DRM、授权校验、在线激活或反篡改绕过。
 
 ## 引擎报告
