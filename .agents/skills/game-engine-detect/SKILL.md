@@ -52,12 +52,6 @@ description: 在授权本地化项目中识别非 RPG Windows 游戏引擎，再
 
 推荐 Skill：`bruns-eenz-localization`。
 
-## 明确排除
-
-- LiveMaker / LiveNovel。
-- RPG Maker 工作流。
-- DRM、授权校验、在线激活或反篡改绕过。
-
 ## 引擎报告
 
 `work/engine_report.md` 应包含：
@@ -68,5 +62,5 @@ description: 在授权本地化项目中识别非 RPG Windows 游戏引擎，再
 - 需要解包的封包。
 - 文本格式和可能编码。
 - 旧补丁是否只能作为参考。
-- 不能从旧版本混用的文件。
+- 当前版本应使用的基准文件。
 - 推荐的下一步 Skill 或 Workflow。
