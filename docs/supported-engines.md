@@ -7,6 +7,7 @@
 | Kirikiri Z / KAG | `.xp3`, `.ks`, `.tjs` | Supported |
 | LiLiM / Le.Chocolat AOS | `scr.aos` | Supported |
 | HSP / DPM | `.dpm` | Supported |
+| Bruns / EENC / EENZ | `ams.cfg`, `scene/*.bso`, `EENC`, `EENZ` | Supported |
 | Unknown non-RPG VN | engine report first | Triage only |
 
 ## Excluded

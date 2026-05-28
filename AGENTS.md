@@ -17,6 +17,7 @@ Supported:
 - Kirikiri Z / KAG / XP3
 - LiLiM / Le.Chocolat AOS
 - HSP / DPM
+- Bruns / EENC / EENZ
 - unknown non-RPG VN engine analysis
 - SExtractor JSON extraction, translation, reinsertion, packaging, and runtime QA
 

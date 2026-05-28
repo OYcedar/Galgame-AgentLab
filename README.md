@@ -22,6 +22,7 @@ Current profiles:
 - Kirikiri Z / KAG / XP3
 - LiLiM / Le.Chocolat AOS
 - HSP / DPM
+- Bruns / EENC / EENZ
 - generic unknown VN engine detection
 
 Explicitly excluded:
@@ -51,6 +52,7 @@ agents/
 
 .agents/skills/
   game-engine-detect/
+  bruns-eenz-localization/
   kirikiri-z-localization/
   lilim-aos-localization/
   hsp-dpm-localization/
