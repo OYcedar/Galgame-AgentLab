@@ -1,0 +1,58 @@
+# Local games and workspaces
+games/
+work/
+dist/
+release/
+发布/
+*_work/
+_work/
+
+# Game/archive outputs
+*.xp3
+*.aos
+*.dpm
+*.wolf
+*.rgss*
+*.7z
+*.zip
+*.rar
+
+# Large game assets
+*.ogg
+*.wav
+*.mp3
+*.mp4
+*.avi
+*.webm
+*.png
+*.jpg
+*.jpeg
+*.webp
+
+# Executables and binary tools
+*.exe
+*.dll
+*.pdb
+
+# Secrets and local config
+setting.toml
+*.env
+*.key
+*.secret
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Reports generated during runs
+runtime_screens/
+screenshots/
+*.log
+
+# OS/editor
+Thumbs.db
+.DS_Store
+.idea/
+.vscode/
