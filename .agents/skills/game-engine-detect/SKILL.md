@@ -29,6 +29,20 @@ description: 在授权本地化项目中识别非 RPG Windows 游戏引擎，再
 
 推荐 Skill：`kirikiri-z-localization`。
 
+### TyranoScript / TyranoBuilder / Electron
+
+证据：
+
+- `resources/app/package.json`
+- `resources/app/main.js`
+- `resources/app/data/scenario/*.ks`
+- `resources/app/data/system/Config.tjs`
+- `tyrano/` 或 `tyrano/plugins/kag/`
+
+推荐 Skill：`tyrano-electron-localization`。
+
+注意：它的 `.ks` 语法接近 KAG，但不是 Kirikiri XP3 工作流。通常直接回填 Electron app 内的 `.ks`、标题配置和必要的 `main.js`。
+
 ### LiLiM / Le.Chocolat AOS
 
 证据：

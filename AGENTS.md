@@ -15,6 +15,7 @@
 支持：
 
 - Kirikiri Z / KAG / XP3
+- TyranoScript / TyranoBuilder / Electron
 - LiLiM / Le.Chocolat AOS
 - Bruns / EENC / EENZ
 - 未知非 RPG VN 引擎分析
