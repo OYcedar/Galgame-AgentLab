@@ -19,6 +19,7 @@
 - Bruns / EENC / EENZ
 - 未知非 RPG VN 引擎分析
 - SExtractor JSON 提取、翻译、回填、封包和实机 QA
+- 术语表清理后和译文完成后执行人称与称呼审校
 
 ## 搜索
 

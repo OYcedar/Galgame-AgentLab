@@ -44,6 +44,7 @@ agents/
   bruns-eenz-localization/
   kirikiri-z-localization/
   lilim-aos-localization/
+  vn-address-audit/
   vn-sextractor-json/
   vn-runtime-test/
   vn-release-packaging/
